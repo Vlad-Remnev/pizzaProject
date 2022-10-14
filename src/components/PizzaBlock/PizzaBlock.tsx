@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 
-interface IPizzaBlock {
+export interface IPizzaBlock {
+    id: number
     title: string
     price: number
     imageUrl: string
