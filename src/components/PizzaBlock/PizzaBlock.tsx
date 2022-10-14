@@ -18,6 +18,7 @@ const PizzaBlock:FC<IPizzaBlock> = ({title, price, types, sizes, imageUrl}) => {
     const pizzaDoughNames = ['тонкое', 'традиционное']
 
     return (
+        <div className='pizza-wrapper'>
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
@@ -69,6 +70,7 @@ const PizzaBlock:FC<IPizzaBlock> = ({title, price, types, sizes, imageUrl}) => {
                     <i>0</i>
                 </button>
             </div>
+        </div>
         </div>
     );
 };

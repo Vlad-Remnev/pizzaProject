@@ -1,16 +1,24 @@
 @import '../variables.scss';
 
+.pizza-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .pizza-block {
   width: 280px;
   text-align: center;
   margin-bottom: 65px;
-
-  &:not(:nth-of-type(4n)) {
-    margin-right: 35px;
+  
+  @media (max-width: 390px) {
+    width: 250px;
   }
 
   &__image {
     width: 260px;
+    @media (max-width: 390px) {
+      width: 250px;
+    }
   }
 
   &__title {
