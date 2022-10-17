@@ -1,13 +1,29 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 
-const Sort = () => {
+interface ISort {
+    sortObj: IList
+    onClickSort: (sortProperty: IList) => void
+}
+
+export interface IList {
+    name: string
+    sortProperty: string
+}
+
+const Sort:FC<ISort> = ({sortObj, onClickSort}) => {
     const [popup, setPopup] = useState(false)
-    const [selected, setSelected] = useState(0)
-    const list = ['популярности', 'цене', 'алфавиту']
-    const sortName = list[selected]
 
-    const onClickSelector = (index: number) => {
-        setSelected(index)
+    const list: IList[] = [
+        {name: 'популярности (DESC)', sortProperty: 'rating'},
+        {name: 'популярности (ASC)', sortProperty: '-rating'},
+        {name: 'цене (DESC)', sortProperty: 'price'},
+        {name: 'цене (ASC)', sortProperty: '-price'},
+        {name: 'алфавиту (DESC)', sortProperty: 'title'},
+        {name: 'алфавиту(ASC)', sortProperty: '-title'}
+    ]
+
+    const onClickSelector = (sortProperty: IList) => {
+        onClickSort(sortProperty)
         setPopup(!popup)
     }
     return (
@@ -26,19 +42,19 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setPopup(!popup)}>{sortName}</span>
+                <span onClick={() => setPopup(!popup)}>{sortObj.name}</span>
             </div>
             {popup &&
                 <div className="sort__popup">
                     <ul>
                         {list.map((item, index) => (
                             <li onClick={() => {
-                                onClickSelector(index)
+                                onClickSelector(item)
                             }}
                                 key={index}
-                                className={selected === index ? 'active' : ''}
+                                className={sortObj.sortProperty === item.sortProperty ? 'active' : ''}
                             >
-                                {item}
+                                {item.name}
                             </li>
                         ))}
                     </ul>

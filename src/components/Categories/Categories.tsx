@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 
-const Categories = () => {
-    const [activeIndex, setActiveIndex] = useState(0)
+interface ICategories {
+    catId: number
+    onClickCategory: (id: number) => void
+}
 
-    const onClickCategory = (index: number) => {
-        setActiveIndex(index)
-    }
+const Categories:FC<ICategories> = ({catId, onClickCategory}) => {
 
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
     const renderedCategories = categories.map((item, index) => (
         <li key={index}
             onClick={() => onClickCategory(index)}
-            className={activeIndex === index ? "active" : ""}
+            className={catId === index ? "active" : ""}
         >
             {item}
         </li>
