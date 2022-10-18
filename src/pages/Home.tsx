@@ -5,12 +5,17 @@ import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock, {IPizzaBlock} from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination";
 import {SearchContext} from "../App";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../redux/store";
 
 // interface IHome {
 //     searchValue: string
 // }
 
 const Home: FC = () => {
+    const state = useSelector<RootState>(state => state.filter)
+    const dispatch = useDispatch<AppDispatch>()
+
     const {searchValue} = React.useContext(SearchContext)
     const [items, setItems] = useState<IPizzaBlock[]>([])
     const [categoryId, setCategoryId] = useState<number>(0)
