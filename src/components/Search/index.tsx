@@ -1,12 +1,9 @@
 import React, {FC} from 'react';
 import styles from './Search.module.scss'
+import {SearchContext} from "../../App";
 
-interface ISearch {
-    searchValue: string
-    setSearchValue: (searchValue: string) => void
-}
-
-const Search: FC<ISearch> = ({searchValue, setSearchValue}) => {
+const Search: FC = () => {
+    const {searchValue, setSearchValue} = React.useContext(SearchContext)
     const cleanUp = () => {
         setSearchValue('')
     }

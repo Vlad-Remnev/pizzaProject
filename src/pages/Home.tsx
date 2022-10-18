@@ -4,12 +4,14 @@ import Sort, {IList} from "../components/Sort/Sort";
 import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock, {IPizzaBlock} from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination";
+import {SearchContext} from "../App";
 
-interface IHome {
-    searchValue: string
-}
+// interface IHome {
+//     searchValue: string
+// }
 
-const Home: FC<IHome> = ({searchValue}) => {
+const Home: FC = () => {
+    const {searchValue} = React.useContext(SearchContext)
     const [items, setItems] = useState<IPizzaBlock[]>([])
     const [categoryId, setCategoryId] = useState<number>(0)
     const [sort, setSort] = useState<IList>({name: 'популярности', sortProperty: 'rating'})
