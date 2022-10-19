@@ -1,18 +1,29 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {ChangeEvent, FC, useCallback, useRef, useState} from 'react';
+import debounce from 'lodash.debounce'
 import styles from './Search.module.scss'
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../redux/store";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../redux/store";
 import {setSearch} from "../../redux/slices/filterSlice";
 
 const Search: FC = () => {
-    const search = useSelector<RootState, string>(state => state.filter.search)
+    // const search = useSelector<RootState, string>(state => state.filter.search)
     const dispatch = useDispatch<AppDispatch>()
+    const [value, setValue] = useState<string>('')
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    const inputDebounce = useCallback(
+        debounce((str: string) => {
+            dispatch(setSearch(str))
+        }, 750), [])
 
     const changeSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setSearch(event.currentTarget.value))
+        setValue(event.currentTarget.value)
+        inputDebounce(event.currentTarget.value)
     }
     const cleanUp = () => {
         dispatch(setSearch(''))
+        setValue('')
+        inputRef.current?.focus()
     }
     return (
         <div className={styles.root}>
@@ -22,9 +33,9 @@ const Search: FC = () => {
                         d="M18,10a8,8,0,1,0-3.1,6.31l6.4,6.4,1.41-1.41-6.4-6.4A8,8,0,0,0,18,10Zm-8,6a6,6,0,1,1,6-6A6,6,0,0,1,10,16Z"/>
                 </g>
             </svg>
-            <input value={search} onChange={changeSearchValue}
+            <input ref={inputRef} autoFocus value={value} onChange={changeSearchValue}
                    className={styles.searchBar} type="text" placeholder="Поиск пиццы..."/>
-            {search && (
+            {value && (
                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1"
                      version="1.1" viewBox="0 0 512 512" className={styles.iconClose} onClick={cleanUp}>
                     <path

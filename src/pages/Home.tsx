@@ -1,4 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
+import axios from 'axios'
 import Categories from "../components/Categories/Categories";
 import Sort, {IList} from "../components/Sort/Sort";
 import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
@@ -14,18 +15,18 @@ const Home: FC = () => {
 
     const [items, setItems] = useState<IPizzaBlock[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    console.log(state)
+
     useEffect(() => {
         setIsLoading(true)
         const order = state.sort.sortProperty.includes('-') ? 'asc' : 'desc'
         const sortBy = state.sort.sortProperty.replace('-', '')
         const category = state.categoryId > 0 ? `category=${state.categoryId}` : ''
         const search = state.search ? `search=${state.search}` : ''
-        fetch(`https://6347d8c9db76843976b3ac95.mockapi.io/items?page=${state.currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`)
-            .then(res => res.json())
-            .then(data => {
+        axios
+            .get(`https://6347d8c9db76843976b3ac95.mockapi.io/items?page=${state.currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`)
+            .then(res => {
                 setIsLoading(false)
-                setItems(data)
+                setItems(res.data)
             })
         window.scrollTo(0, 0)
     }, [state.categoryId, state.sort, state.search, state.currentPage])
