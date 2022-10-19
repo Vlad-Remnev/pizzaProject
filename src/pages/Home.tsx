@@ -14,7 +14,7 @@ const Home: FC = () => {
 
     const [items, setItems] = useState<IPizzaBlock[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-
+    console.log(state)
     useEffect(() => {
         setIsLoading(true)
         const order = state.sort.sortProperty.includes('-') ? 'asc' : 'desc'
